@@ -1,8 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./main.css";
+import { useSelector , useDispatch } from "react-redux";
+import { deletes } from "../redux/formData";
 
-const Home = ({ Movie, setmovieName }) => {
+const Home = ({ setmovieName }) => {
+  const { arr: Movie } = useSelector((state) => state.arr);
+
+ const dispatch = useDispatch()
+
+ function remove(e){
+  console.log(e.target.name);
+       dispatch(deletes(e.target.name))
+
+ }
+
+
   return (
     <div>
       {Movie.map((item, index) => {
@@ -39,6 +52,9 @@ const Home = ({ Movie, setmovieName }) => {
                 >
                   Edit
                 </NavLink>
+              </div>
+              <div>
+             <button className="button" name={item.id} onClick={remove}>delete</button>
               </div>
             </div>
           </div>

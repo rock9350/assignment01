@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { edit } from "../redux/formData";
+import { useSelector } from "react-redux";
 
-const Edit = ({ Movie, get, movieName }) => {
+const Edit = ({ movieName }) => {
+  const { arr: Movie } = useSelector((state) => state.arr);
   let Data = [...Movie];
   const filter = Data.filter((item) => {
     return item.Name == movieName;
   });
+
+  const dispatch = useDispatch();
 
   const [Form, setForm] = useState({
     Name: "",
     Link: "",
     Genres: "Entertainment",
     img: "",
-    Song:""
+    Song: "",
   });
 
   useEffect(() => {
@@ -20,7 +26,8 @@ const Edit = ({ Movie, get, movieName }) => {
   }, []);
 
   const onSubmit = () => {
-    get(Form);
+    dispatch(edit(Form));
+    console.log(Form);
   };
 
   const onEdit = (e) => {
@@ -34,10 +41,14 @@ const Edit = ({ Movie, get, movieName }) => {
   return (
     <>
       <form id="form" onSubmit={onForm}>
-        <label className="label" htmlFor="Name">Movie Name</label>
+        <label className="label" htmlFor="Name">
+          Movie Name
+        </label>
         <input type="text" name="Name" onChange={onEdit} value={Form.Name} />
 
-        <label className="label" htmlFor="Link">Movie Link</label>
+        <label className="label" htmlFor="Link">
+          Movie Link
+        </label>
         <input
           type="text"
           name="Link"
@@ -45,7 +56,7 @@ const Edit = ({ Movie, get, movieName }) => {
           value={Form.Link}
         ></input>
 
-<label className="label" htmlFor="Song">
+        <label className="label" htmlFor="Song">
           Movie Mp3{" "}
         </label>
         <input
@@ -55,7 +66,9 @@ const Edit = ({ Movie, get, movieName }) => {
           value={Form.Song}
         ></input>
 
-        <label className="label" htmlFor="Genres">Movie Genres</label>
+        <label className="label" htmlFor="Genres">
+          Movie Genres
+        </label>
         <select name="Genres" onChange={onEdit} value={Form.Genres}>
           <option>Entertainment</option>
           <option>Education</option>
@@ -63,7 +76,9 @@ const Edit = ({ Movie, get, movieName }) => {
           <option>Love</option>
         </select>
 
-        <label className="label" htmlFor="Link">Movie Img</label>
+        <label className="label" htmlFor="Link">
+          Movie Img
+        </label>
         <input
           type="text"
           name="img"
@@ -72,7 +87,7 @@ const Edit = ({ Movie, get, movieName }) => {
         ></input>
 
         <NavLink id="add" to="/" onClick={onSubmit}>
-         Edit Movie 
+          Edit Movie
         </NavLink>
       </form>
     </>

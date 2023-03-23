@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Movie from "../../movie";
+import { create } from "../redux/formData";
 import "./create.css";
 
 const Create = (props) => {
@@ -13,10 +15,14 @@ const Create = (props) => {
     Song: "",
   };
 
+
+  const dispatch = useDispatch()
+  const arrr =  useSelector((state) => state.arr)
+
   const [Form, setForm] = useState(initialData);
 
   const onSubmit = () => {
-    props.get(Form);
+    dispatch(create(Form))
   };
 
   const onEdit = (e) => {
